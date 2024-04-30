@@ -1,0 +1,46 @@
+//
+// Created by Cisco on 29/04/2024.
+//
+
+#include "Particles.hpp"
+
+
+void ParticleSystem::NewParticleSystem()
+{
+    for(int i = 0; i < 100; i++)
+    {
+        auto* particle = new Particle({rand()%640, rand()%480});
+        _particles.emplace_back(particle);
+    }
+
+}
+
+void ParticleSystem::DrawParticles(SDL_Renderer* renderer)
+{
+    for(auto part : _particles)
+    {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderDrawPoint(renderer, part->x, part->y);
+    }
+}
+
+void ParticleSystem::Update(SDL_Renderer* renderer)
+{
+    for(auto part : _particles)
+    {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderDrawPoint(renderer, part->x, part->y);
+
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+        part->dx(rand()%640);
+        part->dy(rand()%480);
+
+        part->x() += part->dx;
+        part->y() += part->dy;
+
+
+
+    }
+}
+
