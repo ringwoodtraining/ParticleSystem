@@ -10,6 +10,9 @@ include_directories(SDL-release-2.30.2/include)
 add_subdirectory(SDL_image-release-2.8.2)
 include_directories(SDL_image-release-2.8.2/include)
 
+add_subdirectory(freeglut-3.4.0)
+include_directories(freeglut-3.4.0/include)
+
 
 set(HEADER_FILES DisplayManager.hpp)
 

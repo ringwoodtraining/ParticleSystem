@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 
+#include <GL/freeglut.h>
+
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <SDL_video.h>
