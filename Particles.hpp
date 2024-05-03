@@ -9,7 +9,9 @@
 #include <vector>
 #include <cmath>
 
+#define SDL_MAIN_HANDLED
 #include <SDL_render.h>
+#include <SDL_image.h>
 
 struct Particle
 {
@@ -23,6 +25,9 @@ struct Particle
 
     // Speed
     int velocity = 0;
+
+    // Texture
+    SDL_Texture* texture = nullptr;
 
     // Color
     int r = 0;
@@ -44,7 +49,7 @@ struct ParticleParams
 
 };
 
-class ParticleSystem
+class ParticleSystem final
 {
 public:
 
@@ -52,9 +57,7 @@ public:
     void                    DrawParticles(SDL_Renderer* renderer);
     void                    Update(SDL_Renderer* renderer);
 
-
-
-                            ParticleSystem() = default;
+    ParticleSystem() = default;
     explicit                ParticleSystem(const ParticleParams params) : _params(params) {}
     virtual                 ~ParticleSystem() = default;
 
