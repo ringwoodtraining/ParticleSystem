@@ -28,6 +28,7 @@ private:
 
     SDL_Window*         _window = nullptr;
     SDL_Renderer*       _renderer = nullptr;
+    SDL_Surface*        _window_surface = nullptr;
     SDL_Event           _event;
 
     ParticleParams      _params;

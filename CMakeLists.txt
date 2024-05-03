@@ -19,4 +19,4 @@ set(SOURCE_FILES DisplayManager.cpp
 
 add_executable(ParticleSystem main.cpp ${HEADER_FILES} ${SOURCE_FILES})
 
-target_link_libraries(ParticleSystem SDL2 -static)
+target_link_libraries(ParticleSystem SDL2 SDL2_image -static)

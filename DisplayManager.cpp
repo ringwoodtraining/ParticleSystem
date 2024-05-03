@@ -20,6 +20,13 @@ void DisplayManager::CreateDisplay(const std::string& title, int width, int heig
     SDL_RenderClear(_renderer);
     // SDL_SetRenderDrawColor(_renderer, rand(), rand(), rand(), 255);
 
+    _window_surface = SDL_GetWindowSurface(_window);
+    if (!_window_surface)
+    {
+        std::cout << "Error getting surface: " << SDL_GetError() << std::endl;
+        // return false;
+    }
+
 }
 
 void DisplayManager::Run()
@@ -32,7 +39,7 @@ void DisplayManager::Run()
 
         _particle_system.NewParticleSystem();
 
-        _particle_system.DrawParticles(_renderer);
+        _particle_system.DrawParticles(_renderer, _window_surface);
 
         // _particle_system.Update(_renderer);
 
@@ -52,6 +59,9 @@ void DisplayManager::Run()
 
 DisplayManager::~DisplayManager()
 {
+    // Free images
+    // SDL_FreeSurface( image1 );
+
     SDL_DestroyWindow(_window);
     _window = nullptr;
 

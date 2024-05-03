@@ -15,12 +15,15 @@ void ParticleSystem::NewParticleSystem()
 
 }
 
-void ParticleSystem::DrawParticles(SDL_Renderer* renderer)
+void ParticleSystem::DrawParticles(SDL_Renderer* renderer, SDL_Surface* surface)
 {
     for(auto part : _particles)
     {
-        SDL_SetRenderDrawColor(renderer, part->r, part->g, part->b, 255);
-        SDL_RenderDrawPoint(renderer, part->x, part->y);
+        // Blit image to entire window
+        part->load("assets/rotating_orbs-1.0/PNG/32x32/rotating_orbs.png");
+        SDL_BlitSurface( part->surface, nullptr, surface, nullptr);
+        // SDL_SetRenderDrawColor(renderer, part->r, part->g, part->b, 255);
+        // SDL_RenderDrawPoint(renderer, part->x, part->y);
     }
 }
 
