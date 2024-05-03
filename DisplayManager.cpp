@@ -39,7 +39,7 @@ void DisplayManager::Run()
 
         _particle_system.NewParticleSystem();
 
-        _particle_system.DrawParticles(_renderer, _window_surface);
+        _particle_system.DrawParticles(_renderer);
 
         // _particle_system.Update(_renderer);
 

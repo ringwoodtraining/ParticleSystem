@@ -27,33 +27,18 @@ struct Particle
     int velocity = 0;
 
     // Texture
-    SDL_Surface* surface = nullptr;
+    SDL_Texture* texture = nullptr;
 
-    bool load(const std::string& file)
+    SDL_Texture* load_texture(const std::string& file, SDL_Renderer* renderer)
     {
-        //The final optimized image
-        SDL_Surface* optimizedSurface = nullptr;
-
-        //Load image at specified path
-        SDL_Surface* loadedSurface = IMG_Load(file.c_str());
-        if(loadedSurface == nullptr)
+        texture = IMG_LoadTexture( renderer, file.c_str() );
+        if ( texture == nullptr )
         {
-            printf( "Unable to load image %s! SDL_image Error: %s\n", file.c_str(), IMG_GetError() );
-        }
-        else
-        {
-            //Convert surface to screen format
-            optimizedSurface = SDL_ConvertSurface( loadedSurface, surface->format, 0 );
-            if( optimizedSurface == nullptr )
-            {
-                printf( "Unable to optimize image %s! SDL Error: %s\n", file.c_str(), SDL_GetError() );
-            }
-
-            //Get rid of old loaded surface
-            SDL_FreeSurface(loadedSurface);
+            std::cout << "Failed to load texture: " << file << " error: " << SDL_GetError() << std::endl;
+            return nullptr;
         }
 
-        return optimizedSurface;
+        return texture;
     }
 
     // Color
@@ -81,7 +66,7 @@ class ParticleSystem final
 public:
 
     void                    NewParticleSystem();
-    void                    DrawParticles(SDL_Renderer* renderer, SDL_Surface* surface);
+    void                    DrawParticles(SDL_Renderer* renderer);
     void                    Update(SDL_Renderer* renderer);
 
     ParticleSystem() = default;
