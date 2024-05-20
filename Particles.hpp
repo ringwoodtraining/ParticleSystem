@@ -9,37 +9,23 @@
 #include <vector>
 #include <cmath>
 
-#define SDL_MAIN_HANDLED
-#include <SDL_render.h>
-#include <SDL_image.h>
 
 struct Particle
 {
     // Initial position
-    int x = 0;
-    int y = 0;
+    float x = 0;
+    float y = 0;
+    float z = 0;
+
 
     // Delta position
     int dx = 0;
     int dy = 0;
+    int dz = 0;
 
     // Speed
     int velocity = 0;
 
-    // Texture
-    SDL_Texture* texture = nullptr;
-
-    SDL_Texture* load_texture(const std::string& file, SDL_Renderer* renderer)
-    {
-        texture = IMG_LoadTexture( renderer, file.c_str() );
-        if ( texture == nullptr )
-        {
-            std::cout << "Failed to load texture: " << file << " error: " << SDL_GetError() << std::endl;
-            return nullptr;
-        }
-
-        return texture;
-    }
 
     // Color
     int r = 0;
@@ -51,9 +37,9 @@ struct Particle
 
 struct ParticleParams
 {
-    // Maxium amount of particles
+    // Maximum amount of particles
     const int MAX_PARTICLES = 10000;
-    // Maxium life span
+    // Maximum life span
     const int MAX_LIFESPAN = 3000;
 
     // World gravity
@@ -66,11 +52,11 @@ class ParticleSystem final
 public:
 
     void                    NewParticleSystem();
-    void                    DrawParticles(SDL_Renderer* renderer);
-    void                    Update(SDL_Renderer* renderer);
+    void                    DrawParticles();
+    void                    Update();
 
-    ParticleSystem() = default;
     explicit                ParticleSystem(const ParticleParams params) : _params(params) {}
+                            ParticleSystem() = default;
     virtual                 ~ParticleSystem() = default;
 
 private:

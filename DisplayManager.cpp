@@ -4,69 +4,99 @@
 
 #include "DisplayManager.hpp"
 
-void DisplayManager::CreateDisplay(const std::string& title, int width, int height)
+bool DisplayManager::InitGLFW()
 {
-    SDL_Init(SDL_INIT_EVERYTHING);
+    glfwSetErrorCallback(_error_callback);
 
-    _window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, width, height,
-        SDL_WINDOW_OPENGL| SDL_WINDOW_SHOWN | SDL_WINDOW_MAXIMIZED);
-
-    _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-    // SDL_CreateWindowAndRenderer(640*2, 480*2, SDL_WINDOW_OPENGL| SDL_WINDOW_SHOWN | SDL_WINDOW_MAXIMIZED, &_window, &_renderer);
-
-    SDL_RenderSetScale(_renderer, 2, 2);
-    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
-    SDL_RenderClear(_renderer);
-    // SDL_SetRenderDrawColor(_renderer, rand(), rand(), rand(), 255);
-
-    _window_surface = SDL_GetWindowSurface(_window);
-    if (!_window_surface)
+    if (!glfwInit())
     {
-        std::cout << "Error getting surface: " << SDL_GetError() << std::endl;
-        // return false;
+        std::cerr << "glfw Initialization failed";
+        return true;
     }
+    return false;
+}
+
+bool DisplayManager::CreateDisplay(GLFWwindow* window, int width, int height, const std::string& title)
+{
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+
+    window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+    glfwMakeContextCurrent(window);
+    if (!window)
+    {
+        std::cerr << "Window or OpenGL context creation failed" << std::endl;
+        glfwTerminate();
+        return true;
+    }
+
+    // Set the required callback functions
+    glfwSetKeyCallback(window, _key_callback);
+
+    // Load OpenGL functions, gladLoadGL returns the loaded version, 0 on error.
+    //int version = gladLoadGL(glfwGetProcAddress);
+    int version = gladLoadGL();
+    if (version == 0)
+    {
+        std::cout << "Failed to initialize OpenGL context" << std::endl;
+        return true;
+    }
+
+    return false;
 
 }
 
 void DisplayManager::Run()
 {
-    bool running = true;
-    while(running)
+    while(!glfwWindowShouldClose(_window))
     {
+        ParticleSystem particle_system;
 
-        // ParticleSystem particle_system;
+        glfwSwapBuffers(_window);
+        glfwPollEvents();
 
-        _particle_system.NewParticleSystem();
 
-        _particle_system.DrawParticles(_renderer);
+//        _particle_system.NewParticleSystem();
 
-        // _particle_system.Update(_renderer);
-
-        while(SDL_PollEvent(&_event))
-        {
-            if(_event.type == SDL_QUIT)
-            {
-                running = false;
-            }
-        }
-
-        SDL_RenderPresent(_renderer);
+//        _particle_system.DrawParticles(_renderer);
+//
+//        _particle_system.Update(_renderer);
+//
 
     }
 
 }
 
-DisplayManager::~DisplayManager()
+void DisplayManager::DestroyWindow(GLFWwindow* window)
 {
-    // Free images
-    // SDL_FreeSurface( image1 );
-
-    SDL_DestroyWindow(_window);
-    _window = nullptr;
-
-    SDL_Quit();
+    glfwDestroyWindow(window);
 }
 
+void DisplayManager::EndGLFW()
+{
+    glfwTerminate();
+}
+
+DisplayManager::~DisplayManager()
+{
+    glfwTerminate();
+    glfwDestroyWindow(_window);
+    _window = nullptr;
+
+}
+
+void DisplayManager::_error_callback(int error, const char* description)
+{
+    std::cerr << "Error: %s\n" << description;
+}
+
+void DisplayManager::_key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+}
 
 

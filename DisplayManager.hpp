@@ -9,32 +9,35 @@
 #include <iostream>
 #include <string>
 
-#include <GL/freeglut.h>
+#include <glad/glad.h>
 
-#define SDL_MAIN_HANDLED
-#include <SDL.h>
-#include <SDL_video.h>
+#include <GLFW/glfw3.h>
 
 class DisplayManager
 {
 public:
 
-    void                CreateDisplay(const std::string& title, int width, int height);
+    static bool         InitGLFW();
+    static bool         CreateDisplay(GLFWwindow* window, int width, int height, const std::string& title);
 
     void                Run();
+
+    static void         EndGLFW();
+    static void         DestroyWindow(GLFWwindow* window);
+
 
                         DisplayManager() = default;
                         ~DisplayManager();
 
 private:
 
-    SDL_Window*         _window = nullptr;
-    SDL_Renderer*       _renderer = nullptr;
-    SDL_Surface*        _window_surface = nullptr;
-    SDL_Event           _event;
+    GLFWwindow*         _window;
 
     ParticleParams      _params;
     ParticleSystem      _particle_system;
+
+    static void         _error_callback(int error, const char* description);
+    static void         _key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 
 };
