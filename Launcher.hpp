@@ -19,6 +19,7 @@
 #include <Windows.h>
 #endif
 
+#include <iostream>
 #include <memory>
 #include <string>
 #include <string_view>
