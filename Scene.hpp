@@ -13,6 +13,8 @@ namespace ParticleSystem
 
     private:
 
+        bool _isPaused = false;
+
     };
 
 } // ParticleSystem
