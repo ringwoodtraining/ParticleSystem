@@ -23,10 +23,12 @@ include_directories(${EXT_DIR}/imgui-1.90.7)
 include_directories(${EXT_DIR}/imgui-1.90.7/backends)
 
 
-set(HEADER_FILES    Launcher.hpp
+set(HEADER_FILES    InputManager.hpp
+                    Launcher.hpp
                     Particles.hpp)
 
-set(SOURCE_FILES    Launcher.cpp
+set(SOURCE_FILES    InputManager.cpp
+                    Launcher.cpp
                     Particles.cpp)
 
 add_executable(ParticleSystem main.cpp ${HEADER_FILES} ${SOURCE_FILES})

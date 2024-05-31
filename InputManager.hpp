@@ -4,9 +4,11 @@
 
 #pragma once
 
-namespace ParticleSystem {
+namespace ParticleSystem
+{
 
-    class InputManager {
+    class InputManager
+    {
 
     };
 

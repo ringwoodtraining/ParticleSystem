@@ -4,5 +4,9 @@
 
 #include "InputManager.hpp"
 
-namespace ParticleSystem {
+namespace ParticleSystem
+{
+
+
+
 } // ParticleSystem

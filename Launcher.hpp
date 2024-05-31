@@ -5,7 +5,7 @@
 #pragma once
 
 // TODO:
-//#include "InputManager.h"
+#include "InputManager.hpp"
 
 #include "GLFW/glfw3.h"
 #include "glm/vec3.hpp"
