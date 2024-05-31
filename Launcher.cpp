@@ -54,4 +54,6 @@ Launcher::Launcher()
     glfwSetWindowUserPointer(_window, this);
     glfwSetKeyCallback(_window, InputManager::key_callback);
 
+    
+
 }
