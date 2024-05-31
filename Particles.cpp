@@ -9,8 +9,8 @@ void ParticleSystem::NewParticleSystem()
 {
     for(int i = 0; i < 100; i++)
     {
-//        auto* particle = new Particle({rand(), rand(), rand(), 0, 0, 0, nullptr,rand()%255,rand()%255,rand()%255});
-//        _particles.emplace_back(particle);
+        auto* particle = new Particle({(float)rand(), (float)rand(), (float)rand(), 0, 0, 0, rand(), rand()%255, rand()%255, rand()%255, 255});
+        _particles.emplace_back(particle);
     }
 
 }

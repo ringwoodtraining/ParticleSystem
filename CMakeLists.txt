@@ -18,12 +18,16 @@ include_directories(${EXT_DIR}/glm-1.0.1)
 add_subdirectory(${EXT_DIR}/glad)
 include_directories(${EXT_DIR}/glad/include)
 
+#ImGUI
+include_directories(${EXT_DIR}/imgui-1.90.7)
+include_directories(${EXT_DIR}/imgui-1.90.7/backends)
 
-set(HEADER_FILES DisplayManager.hpp)
 
-set(SOURCE_FILES DisplayManager.cpp
-        Particles.cpp
-        Particles.hpp)
+set(HEADER_FILES    Launcher.hpp
+                    Particles.hpp)
+
+set(SOURCE_FILES    Launcher.cpp
+                    Particles.cpp)
 
 add_executable(ParticleSystem main.cpp ${HEADER_FILES} ${SOURCE_FILES})
 
