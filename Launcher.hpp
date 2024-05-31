@@ -72,6 +72,21 @@ namespace ParticleSystem
         // Pointer to the scene
         std::unique_ptr<Scene>  _scene;
 
+
+        struct {
+            float x = 0.0F;
+            float y = 0.0F;
+            float z = 0.0F;
+            float w = 1.0F;
+        }                       _clear_color;
+
+        float                   _attractorDistance = 10.0F;
+        glm::vec3               _mousePositionWorld;
+
+        static constexpr int    MAX_PARTICLES_COUNT = 10000000;
+
+        bool                    _isUiVisible = true;
+
         // Handlers
         void                    _handleInputs();
         void                    _handleUi(float deltaTime);

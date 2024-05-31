@@ -111,12 +111,12 @@ Launcher::~Launcher() {
 
 void Launcher::toggleUiVisibility()
 {
-    isUiVisible = !isUiVisible;
+    _isUiVisible = !_isUiVisible;
 }
 
 void Launcher::clearScreen() const {
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,
-                 clear_color.w);
+    glClearColor(_clear_color.x * _clear_color.w, _clear_color.y * _clear_color.w, _clear_color.z * _clear_color.w,
+                 _clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -155,7 +155,7 @@ auto Launcher::_projectMouse(const double& xMouse, const double& yMouse) -> glm:
     glm::vec3 const camera_to_mouse = glm::normalize(glm::vec3(mouse_world) - _scene->camera.position);
 
     // Use the direction to update the position of an object in the 3D environment
-    return _scene->camera.position + camera_to_mouse * attractorDistance;
+    return _scene->camera.position + camera_to_mouse * _attractorDistance;
 }
 
 auto Launcher::_getOpenGLVendor() -> std::string_view
